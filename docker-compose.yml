@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  db:
+    image: kartoza/postgis:11.5-2.8
+    volumes:
+      - ./pg:/var/lob/postgresql
+    environment:
+      - USERNAME=docker
+      - PASS=docker
+      - ALLOW_IP_RANGE=0.0.0.0/0
+  geoserver:
+    image: kartoza/geoserver:2.18.0
+    volumes:
+      - ./geo:/opt/geoserver/data_dir
+    environment:
+      - GEOSERVER_ADMIN_PASSWORD=geoserver
+      - TOMCAT_EXTRAS=false
+      - STABLE_EXTENSIONS=importer-plugin
