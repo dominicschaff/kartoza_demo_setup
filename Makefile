@@ -36,6 +36,7 @@ clean:
 health:
 	@if [ "$(call get_container_state,nginx)" != "running" ] ; then echo "nginx is down" ; false ; fi
 	@if [ "$(call get_container_state,db)" != "running" ] ; then echo "database is down" ; false ; fi
+	@curl --silent  "https://$$(cat nginx.env | grep SITE_HOST | cut -d'=' -f2)/" > /dev/null
 
 backup:
 restore:
