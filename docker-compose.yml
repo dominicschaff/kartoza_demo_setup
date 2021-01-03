@@ -17,3 +17,10 @@ services:
       - GEOSERVER_ADMIN_PASSWORD=geoserver
       - TOMCAT_EXTRAS=false
       - STABLE_EXTENSIONS=importer-plugin
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+    - ./nginx.conf:/etc/nginx/nginx.conf:ro
+
