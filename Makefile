@@ -6,6 +6,7 @@ get_container_state = $$(echo $(call get_container_id,$(1)) | xargs -I ID docker
 
 help:
 
+
 build:
 	docker-compose pull
 
@@ -27,3 +28,6 @@ health:
 	@if [ "$(call get_container_state,nginx)" != "running" ] ; then echo "nginx is down" ; false ; fi
 	@if [ "$(call get_container_state,db)" != "running" ] ; then echo "database is down" ; false ; fi
 	@if [ "$(call get_container_state,geoserver)" != "running" ] ; then echo "geoserver is down" ; false ; fi
+
+backup:
+restore:

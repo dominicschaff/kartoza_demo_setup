@@ -10,20 +10,20 @@ This is a demo repo with a sample setup.
 
 This sample project needs to contain the following:
 
-* Setup files (Makefiles, docker files, ...) To create this project
-* Simple setup script, to build, and run
-* Should contain help files (or help commands)
-* Must contain a health check command
-* Simple architecture diagram
+* ✓ Setup files (Makefiles, docker files, ...) to create this project : `Makefile`|`docker-compose.yml`
+* ✓ Simple setup script, to build, and run : `make build`
+* ✓ Should contain help files (or help commands) : `make help` and [Help File](docs/index.md)
+* ✓ Must contain a health check command : (`make health`)
+* ✓ Simple architecture diagram : ([Image](docs/infrastructure.png))
 * Configurable environment
 * Must have a valid SSL certificate
-* May use pre-existing applications for the backend
+* May use pre-existing applications for the backend : (Currently use geoserver, plan to also use django)
 
 ## Possible extras:
 
 * Use a database, with backup/restore functionality
 * Application should be able to be horizontally scalable
-* Should preferably use docker
+* ✓ Should preferably use docker
 * Use a local name resolver (custom web URL to main container)
 * Should have multiple service applications
 
