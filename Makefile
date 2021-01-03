@@ -5,7 +5,12 @@ get_container_state = $$(echo $(call get_container_id,$(1)) | xargs -I ID docker
 
 
 help:
-
+	@echo "Help on available commands:"
+	@echo
+	@echo "build: Build this environment"
+	@echo "up: Bring the system up"
+	@echo "down: Bring the system down"
+	@echo "health: Run a health check - exit with error on failure"
 
 build:
 	docker-compose pull
