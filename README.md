@@ -27,3 +27,6 @@ This sample project needs to contain the following:
 * Use a local name resolver (custom web URL to main container)
 * Should have multiple service applications
 
+## Documentation
+
+Documentation for this repo can be found at: <docs/index.md>
