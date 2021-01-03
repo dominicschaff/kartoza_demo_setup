@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.6"
 
 services:
   db:
@@ -7,28 +7,19 @@ services:
       - ./pg:/var/lob/postgresql
     environment:
       - POSTGRES_PASSWORD=docker
-  geoserver:
-    image: kartoza/geoserver:2.18.0
-    volumes:
-      - ./geo:/opt/geoserver/data_dir
-    environment:
-      - GEOSERVER_ADMIN_PASSWORD=geoserver
-      - TOMCAT_EXTRAS=false
-      - STABLE_EXTENSIONS=importer-plugin
   nginx:
-    image: nginx:stable-alpine
-    hostname: sample
-    domainname: sample.local
+    build:
+      context: nginx
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - ./logs:/logs
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
-    links:
-      - "geoserver:geoserver"
+      - ./website:/usr/share/nginx/html:ro
+    env_file:
+      - nginx.env
   certbot:
     image: certbot/certbot
     volumes:

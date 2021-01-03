@@ -12,13 +12,9 @@ help:
 	@echo "down: Bring the system down"
 	@echo "health: Run a health check - exit with error on failure"
 
-ssl:
-	mkdir -p certs
-	openssl req -x509 -out certs/cert.crt -keyout certs/localhost.key \
-		-newkey rsa:2048 -nodes -sha256 -days 365
-
-build: ssl
+build:
 	docker-compose pull
+	docker-compose build
 
 run:
 	docker-compose
@@ -27,6 +23,9 @@ production:
 
 up:
 	docker-compose up --detach
+
+up_geo:
+	docker-compose up geoserver
 
 down:
 	docker-compose down
@@ -37,8 +36,6 @@ clean:
 health:
 	@if [ "$(call get_container_state,nginx)" != "running" ] ; then echo "nginx is down" ; false ; fi
 	@if [ "$(call get_container_state,db)" != "running" ] ; then echo "database is down" ; false ; fi
-	@if [ "$(call get_container_state,geoserver)" != "running" ] ; then echo "geoserver is down" ; false ; fi
-	@if [ "$(call get_container_state,certbot)" != "running" ] ; then echo "certbot is down" ; false ; fi
 
 backup:
 restore:
