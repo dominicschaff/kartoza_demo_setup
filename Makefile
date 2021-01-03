@@ -12,6 +12,10 @@ help:
 	@echo "down: Bring the system down"
 	@echo "health: Run a health check - exit with error on failure"
 
+check-env:
+	@if ! [ -f nginx.env ]; then echo "Missing nginx.env"; false; fi
+	@if ! grep -q SITE_HOST "nginx.env"; then echo "Missing SITE_HOST"; false; fi
+
 build:
 	docker-compose pull
 	docker-compose build
@@ -19,7 +23,8 @@ build:
 run:
 	docker-compose
 
-production:
+production: check-env build
+	bash init-letsencrypt.sh
 
 up:
 	docker-compose up --detach
