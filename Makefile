@@ -11,7 +11,7 @@ run:
 production:
 
 up:
-	docker-compose up
+	docker-compose up nginx
 
 down:
 	docker-compose down
