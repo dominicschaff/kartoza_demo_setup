@@ -3,14 +3,19 @@
 help:
 
 build:
+	docker-compose pull
 
 run:
+	docker-compose
 
 production:
 
 up:
+	docker-compose up
 
 down:
+	docker-compose down
 
 clean:
+	docker-compose down --rmi all -v
 
