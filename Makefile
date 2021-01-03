@@ -11,7 +11,7 @@ run:
 production:
 
 up:
-	docker-compose up nginx
+	docker-compose up --detach
 
 down:
 	docker-compose down
