@@ -20,8 +20,8 @@ services:
     ports:
       - "80:80"
     volumes:
-    - ./nginx.conf:/etc/nginx/nginx.conf:ro
-    environment:
-    - NGINX_HOST=sample.local
-    - NGINX_PORT=80
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./logs:/logs
+    links:
+      - "geoserver:geoserver"
 
