@@ -2,13 +2,11 @@ version: "3.8"
 
 services:
   db:
-    image: kartoza/postgis:11.5-2.8
+    image: postgis/postgis:12-2.5-alpine
     volumes:
       - ./pg:/var/lob/postgresql
     environment:
-      - USERNAME=docker
-      - PASS=docker
-      - ALLOW_IP_RANGE=0.0.0.0/0
+      - POSTGRES_PASSWORD=docker
   geoserver:
     image: kartoza/geoserver:2.18.0
     volumes:
@@ -18,9 +16,12 @@ services:
       - TOMCAT_EXTRAS=false
       - STABLE_EXTENSIONS=importer-plugin
   nginx:
-    image: nginx
+    image: nginx:stable-alpine
     ports:
       - "80:80"
     volumes:
     - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    environment:
+    - NGINX_HOST=sample.local
+    - NGINX_PORT=80
 
