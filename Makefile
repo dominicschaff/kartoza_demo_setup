@@ -14,7 +14,8 @@ help:
 
 ssl:
 	mkdir -p certs
-	openssl req -nodes -x509 -newkey rsa:4096 -keyout certs/key.pem -out certs/cert.pem -days 365
+	openssl req -x509 -out certs/cert.crt -keyout certs/localhost.key \
+		-newkey rsa:2048 -nodes -sha256 -days 365
 
 build: ssl
 	docker-compose pull
