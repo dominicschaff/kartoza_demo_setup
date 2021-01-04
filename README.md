@@ -17,7 +17,7 @@ This sample project needs to contain the following:
 * ✓ Simple architecture diagram : ([Image](docs/infrastructure.png))
 * ✓ Configurable environment : use ``nginx.env``
 * ✓ Must have a valid SSL certificate
-* May use pre-existing applications for the backend : (Currently use geoserver, plan to also use django)
+* ✓ May use pre-existing applications for the backend : (Currently use redmine)
 
 ## Possible extras:
 
