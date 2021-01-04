@@ -60,6 +60,11 @@ health:
 	@if [ "$(call get_container_state,redmin)" != "running" ] ; then echo "redmin is down" ; false ; fi
 	@curl --silent  "https://$$(cat nginx.env | grep SITE_HOST | cut -d'=' -f2)/" > /dev/null
 
+health-dev:
+	@if [ "$(call get_container_state,nginx_dev)" != "running" ] ; then echo "nginx is down" ; false ; fi
+	@if [ "$(call get_container_state,db)" != "running" ] ; then echo "database is down" ; false ; fi
+	@if [ "$(call get_container_state,redmin)" != "running" ] ; then echo "redmin is down" ; false ; fi
+
 backup:
 	docker-compose exec db sh -c 'su - postgres -c "pg_dumpall"' | gzip -9 > latest.sql.gz
 

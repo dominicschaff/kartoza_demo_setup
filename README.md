@@ -13,7 +13,7 @@ This sample project needs to contain the following:
 * ✓ Setup files (Makefiles, docker files, ...) to create this project : `Makefile`|`docker-compose.yml`
 * ✓ Simple setup script, to build, and run : `make build`
 * ✓ Should contain help files (or help commands) : `make help` and [Help File](docs/index.md)
-* ✓ Must contain a health check command : (`make health`)
+* ✓ Must contain a health check command : (`make health`) - note will only work on production. Use `make health-dev` for dev servers.
 * ✓ Simple architecture diagram : ([Image](docs/infrastructure.png))
 * ✓ Configurable environment : use ``nginx.env``
 * ✓ Must have a valid SSL certificate
