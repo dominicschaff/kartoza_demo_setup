@@ -4,7 +4,7 @@ services:
   db:
     image: postgis/postgis:12-2.5-alpine
     volumes:
-      - ./pg:/var/lob/postgresql
+      - ./pg:/var/lib/postgresql
     environment:
       - POSTGRES_PASSWORD=docker
   redmin:
