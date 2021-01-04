@@ -23,7 +23,6 @@ run:
 	docker-compose
 
 production: check-env
-	docker-compose pull
 	docker-compose build nginx
 	bash init-letsencrypt.sh
 
