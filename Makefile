@@ -7,9 +7,19 @@ get_container_state = $$(echo $(call get_container_id,$(1)) | xargs -I ID docker
 help:
 	@echo "Help on available commands:"
 	@echo
-	@echo "build: Build this environment"
-	@echo "up: Bring the system up"
+	@echo "build: Build the dev environment"
+	@echo "dev-up: Bring the dev system up"
+	@echo
+	@echo "build-prod: Build the prod environment"
+	@echo "prod-up: Bring the dev system up"
+	@echo "production: Bring prod up from scratch"
+	@echo
 	@echo "down: Bring the system down"
+	@echo "clean: Bring down the system and kill it"
+	@echo
+	@echo "backup: Backup the database"
+	@echo "restore: Restore a copy of the database"
+	@echo
 	@echo "health: Run a health check - exit with error on failure"
 
 check-env:
@@ -19,17 +29,23 @@ check-env:
 build:
 	docker-compose build nginx_dev
 
+build-prod:
+	docker-compose build nginx
+
 run:
 	docker-compose
 
-production: check-env
-	docker-compose build nginx
+get-cert:
 	bash init-letsencrypt.sh
-	docker-compose up --detach nginx
 	chmod -R 777 data
 
-dev:
+production: check-env build-prod get-cert prod-up
+
+dev-up:
 	docker-compose up --detach nginx_dev
+
+prod-up:
+	docker-compose up --detach nginx
 
 down:
 	docker-compose down
@@ -41,6 +57,7 @@ clean:
 health:
 	@if [ "$(call get_container_state,nginx)" != "running" ] ; then echo "nginx is down" ; false ; fi
 	@if [ "$(call get_container_state,db)" != "running" ] ; then echo "database is down" ; false ; fi
+	@if [ "$(call get_container_state,redmin)" != "running" ] ; then echo "redmin is down" ; false ; fi
 	@curl --silent  "https://$$(cat nginx.env | grep SITE_HOST | cut -d'=' -f2)/" > /dev/null
 
 backup:
