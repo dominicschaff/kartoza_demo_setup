@@ -44,4 +44,9 @@ health:
 	@curl --silent  "https://$$(cat nginx.env | grep SITE_HOST | cut -d'=' -f2)/" > /dev/null
 
 backup:
+	docker-compose exec db sh -c 'su - postgres -c "pg_dumpall"' | gzip -9 > latest.sql.gz
+
 restore:
+	gunzip latest.sql.gz
+	mv latest.sql pg/
+	docker-compose exec db sh -c 'su - postgres -c "psql -f/var/lib/postgresql/latest.sql postgres"'
