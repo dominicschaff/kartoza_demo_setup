@@ -34,6 +34,7 @@ down:
 
 clean:
 	docker-compose down --rmi all -v
+	rm -rf data logs
 
 health:
 	@if [ "$(call get_container_state,nginx)" != "running" ] ; then echo "nginx is down" ; false ; fi
