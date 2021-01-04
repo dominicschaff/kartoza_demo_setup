@@ -21,7 +21,7 @@ This sample project needs to contain the following:
 
 ## Possible extras:
 
-* Use a database, with backup/restore functionality
+* ✓ Use a database, with backup/restore functionality
 * Application should be able to be horizontally scalable
 * ✓ Should preferably use docker
 * Use a local name resolver (custom web URL to main container)
