@@ -8,11 +8,17 @@ Services in use:
 
 ## Main Commands:
 
-* `make` or `make help` - Will show the main commands, and simple help messages
-* `make build` - Will fetch the services as required
-* `make up` - Will bring the services up
-* `make down` - Will bring the services down
-* `make clean` - Will bring the services down, and remove all downloaded images, and delete local data
+* `make build`: Build the dev environment
+* `make dev-up`: Bring the dev system up
+* `make build-prod`: Build the prod environment
+* `make prod-up`: Bring the dev system up
+* `make production`: Bring prod up from scratch
+* `make down`: Bring the system down
+* `make clean`: Bring down the system and kill it
+* `make backup`: Backup the database
+* `make restore`: Restore a copy of the database
+* `make health`: Run a health check - exit with error on failure
+
 
 ## Service Diagram
 
