@@ -25,6 +25,7 @@ run:
 production: check-env
 	docker-compose build nginx
 	bash init-letsencrypt.sh
+	chmod -R 777 data
 
 dev:
 	docker-compose up --detach nginx_dev

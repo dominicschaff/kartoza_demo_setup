@@ -15,8 +15,8 @@ This sample project needs to contain the following:
 * ✓ Should contain help files (or help commands) : `make help` and [Help File](docs/index.md)
 * ✓ Must contain a health check command : (`make health`)
 * ✓ Simple architecture diagram : ([Image](docs/infrastructure.png))
-* Configurable environment
-* Must have a valid SSL certificate
+* ✓ Configurable environment : use ``nginx.env``
+* ✓ Must have a valid SSL certificate
 * May use pre-existing applications for the backend : (Currently use geoserver, plan to also use django)
 
 ## Possible extras:

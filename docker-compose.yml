@@ -7,19 +7,32 @@ services:
       - ./pg:/var/lob/postgresql
     environment:
       - POSTGRES_PASSWORD=docker
+  redmin:
+    image: redmine:4.1.1-alpine
+    environment:
+      - REDMINE_DB_POSTGRES=db
+      - REDMINE_DB_USERNAME=postgres
+      - REDMINE_DB_PASSWORD=docker
+    volumes:
+      - ./redmine_datadir:/usr/src/redmine/files
+    links:
+      - "db:db"
   nginx_dev:
     build:
       context: nginx
       target: base
     volumes:
       - ./logs:/logs
-      - ./website:/usr/share/nginx/html:ro
+    links:
+      - "redmin:redmin"
     ports:
       - "80:80"
   nginx:
     build:
       context: nginx
       target: prod
+    links:
+      - "redmin:redmin"
     ports:
       - "80:80"
       - "443:443"
@@ -27,7 +40,6 @@ services:
       - ./logs:/logs
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
-      - ./website:/usr/share/nginx/html:ro
     env_file:
       - nginx.env
   certbot:
