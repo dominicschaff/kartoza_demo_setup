@@ -17,20 +17,18 @@ check-env:
 	@if ! grep -q SITE_HOST "nginx.env"; then echo "Missing SITE_HOST"; false; fi
 
 build:
-	docker-compose pull
-	docker-compose build
+	docker-compose build nginx_dev
 
 run:
 	docker-compose
 
-production: check-env build
+production: check-env
+	docker-compose pull
+	docker-compose build nginx
 	bash init-letsencrypt.sh
 
-up:
-	docker-compose up --detach
-
-up_geo:
-	docker-compose up geoserver
+dev:
+	docker-compose up --detach nginx_dev
 
 down:
 	docker-compose down

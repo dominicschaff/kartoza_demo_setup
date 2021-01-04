@@ -7,9 +7,19 @@ services:
       - ./pg:/var/lob/postgresql
     environment:
       - POSTGRES_PASSWORD=docker
+  nginx_dev:
+    build:
+      context: nginx
+      target: base
+    volumes:
+      - ./logs:/logs
+      - ./website:/usr/share/nginx/html:ro
+    ports:
+      - "80:80"
   nginx:
     build:
       context: nginx
+      target: prod
     ports:
       - "80:80"
       - "443:443"
@@ -18,6 +28,8 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
       - ./website:/usr/share/nginx/html:ro
+    links:
+      - "certbot:certbot"
     env_file:
       - nginx.env
   certbot:
