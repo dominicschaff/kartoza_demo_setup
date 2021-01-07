@@ -22,10 +22,10 @@ This sample project needs to contain the following:
 ## Possible extras:
 
 * ✓ Use a database, with backup/restore functionality
-* Application should be able to be horizontally scalable
+* ✓ pplication should be able to be horizontally scalable
 * ✓ Should preferably use docker
 * Use a local name resolver (custom web URL to main container)
-* Should have multiple service applications
+* ✓ hould have multiple service applications
 
 ## Documentation
 
