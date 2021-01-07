@@ -11,10 +11,17 @@ check-env:
 	@if ! [ -f nginx.env ]; then echo "Missing nginx.env"; false; fi
 	@if ! grep -q SITE_HOST "nginx.env"; then echo "Missing SITE_HOST"; false; fi
 
-build: ## Build develop instance
+build-base:
+	docker-compose pull db redmin check_db check_redmin
+	docker-compose up --detach db
+	docker-compose run check_db
+	docker-compose up --detach redmin
+	docker-compose run check_redmin
+
+build: build-base ## Build develop instance
 	docker-compose build nginx_dev
 
-build-prod: ## Build the prod environment
+build-prod: build-base## Build the prod environment
 	docker-compose build nginx
 
 get-cert:
