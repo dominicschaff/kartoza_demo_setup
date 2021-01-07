@@ -1,74 +1,57 @@
-.PHONY: help ssl build run production up down clean health
+.PHONY: help ssl build run production up down clean health db-backup db-restore
 
 get_container_id = $$(docker-compose ps -q $(1))
 get_container_state = $$(echo $(call get_container_id,$(1)) | xargs -I ID docker inspect -f '{{.State.Status}}' ID)
 
 
-help:
-	@echo "Help on available commands:"
-	@echo
-	@echo "build: Build the dev environment"
-	@echo "dev-up: Bring the dev system up"
-	@echo
-	@echo "build-prod: Build the prod environment"
-	@echo "prod-up: Bring the dev system up"
-	@echo "production: Bring prod up from scratch"
-	@echo
-	@echo "down: Bring the system down"
-	@echo "clean: Bring down the system and kill it"
-	@echo
-	@echo "backup: Backup the database"
-	@echo "restore: Restore a copy of the database"
-	@echo
-	@echo "health: Run a health check - exit with error on failure"
+help: ## Get help
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 check-env:
 	@if ! [ -f nginx.env ]; then echo "Missing nginx.env"; false; fi
 	@if ! grep -q SITE_HOST "nginx.env"; then echo "Missing SITE_HOST"; false; fi
 
-build:
+build: ## Build develop instance
 	docker-compose build nginx_dev
 
-build-prod:
+build-prod: ## Build the prod environment
 	docker-compose build nginx
-
-run:
-	docker-compose
 
 get-cert:
 	bash init-letsencrypt.sh
 	chmod -R 777 data
 
-production: check-env build-prod get-cert prod-up
+production: check-env build-prod get-cert prod-up ## Run the production environment (Includes building)
 
-dev-up:
+up: dev-up ## Bring dev up
+dev-up: ## Bring dev up
 	docker-compose up --detach nginx_dev
 
-prod-up:
+prod-up: ## Bring production up
 	docker-compose up --detach nginx
 
-down:
+down: ## Take everything down
 	docker-compose down
 
-clean:
+clean: ## Take everything down and clean
 	docker-compose down --rmi all -v
 	rm -rf data logs
 
-health:
+health: ## Do health checks - exit on error
 	@if [ "$(call get_container_state,nginx)" != "running" ] ; then echo "nginx is down" ; false ; fi
 	@if [ "$(call get_container_state,db)" != "running" ] ; then echo "database is down" ; false ; fi
 	@if [ "$(call get_container_state,redmin)" != "running" ] ; then echo "redmin is down" ; false ; fi
 	@curl --silent  "https://$$(cat nginx.env | grep SITE_HOST | cut -d'=' -f2)/" > /dev/null
 
-health-dev:
+health-dev: ## Run health check in dev
 	@if [ "$(call get_container_state,nginx_dev)" != "running" ] ; then echo "nginx is down" ; false ; fi
 	@if [ "$(call get_container_state,db)" != "running" ] ; then echo "database is down" ; false ; fi
 	@if [ "$(call get_container_state,redmin)" != "running" ] ; then echo "redmin is down" ; false ; fi
 
-backup:
+db-backup: ## do a backup
 	docker-compose exec db sh -c 'su - postgres -c "pg_dumpall"' | gzip -9 > latest.sql.gz
 
-restore:
+db-restore: ## do a restore
 	gunzip latest.sql.gz
 	mv latest.sql pg/
 	docker-compose exec db sh -c 'su - postgres -c "psql -f/var/lib/postgresql/latest.sql postgres"'
