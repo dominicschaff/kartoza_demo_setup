@@ -37,7 +37,7 @@ To run this setup:
 
 1. Do a clone of this repo.
 2. For a dev setup run `make build-dev` and then `make up`
-3. For a production setup create the file `nginx.env` in the base. With the contends: `SITE_HOST=<hostname/domain>`
+3. For a production setup create the file `nginx.env` in the base. With the contents: `SITE_HOST=<hostname/domain>`
 4. Run `make production` for the production setup.
 
 This project can be changed to be horizontally scalable by changing the connection parameters for the `redmin` service, however I would recommend then putting this behind a load balancer, and then probably running in the current dev setup. (Production setup only adds SSL).
