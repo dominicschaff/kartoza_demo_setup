@@ -2,6 +2,7 @@ version: "3.6"
 
 services:
   db:
+    container_name: demo_postgres
     image: postgis/postgis:12-2.5-alpine
     volumes:
       - ./pg:/var/lib/postgresql

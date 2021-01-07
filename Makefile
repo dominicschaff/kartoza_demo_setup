@@ -56,9 +56,7 @@ health-dev: ## Run health check in dev
 	@if [ "$(call get_container_state,redmin)" != "running" ] ; then echo "redmin is down" ; false ; fi
 
 db-backup: ## do a backup
-	docker-compose exec db sh -c 'su - postgres -c "pg_dumpall"' | gzip -9 > latest.sql.gz
+	docker exec demo_postgres sh -c "PGPASSWORD=docker pg_dumpall -U postgres -h localhost" | gzip -9 > latest.sql.gz
 
 db-restore: ## do a restore
-	gunzip latest.sql.gz
-	mv latest.sql pg/
-	docker-compose exec db sh -c 'su - postgres -c "psql -f/var/lib/postgresql/latest.sql postgres"'
+	zcat latest.sql.gz | docker exec -i demo_postgres sh -c 'PGPASSWORD=docker psql -U postgres -h localhost postgres'
