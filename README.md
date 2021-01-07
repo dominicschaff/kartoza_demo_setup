@@ -29,7 +29,7 @@ This sample project needs to contain the following:
 
 ## Documentation
 
-Documentation for this repo can be found at: [Update docs](docs/index.md)
+Documentation for this repo can be found at: [Basic Documentation](docs/index.md)
 
 ## Instructions on Usage:
 
