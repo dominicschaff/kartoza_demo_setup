@@ -14,7 +14,7 @@ Run `make` or `make help` to get the commands.
 
 However, basic dev commands:
 * `make build`: Build the dev environment
-* `make dev-up`: Bring the dev system up
+* `make up`: Bring the dev system up
 * `make down`: Bring the system down
 * `make clean`: Bring down the system and kill it
 * `make health-dev`: Run a health check - exit with error on failure

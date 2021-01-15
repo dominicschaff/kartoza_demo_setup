@@ -36,7 +36,7 @@ Documentation for this repo can be found at: [Basic Documentation](docs/index.md
 To run this setup:
 
 1. Do a clone of this repo.
-2. For a dev setup run `make build-dev` and then `make up`
+2. For a dev setup run `make build` and then `make up`
 3. For a production setup create the file `nginx.env` in the base. With the contents: `SITE_HOST=<hostname/domain>`
 4. Run `make production` for the production setup.
 
