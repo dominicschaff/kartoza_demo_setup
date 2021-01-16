@@ -37,7 +37,7 @@ down: ## Take everything down
 
 clean: ## Take everything down and clean
 	docker-compose down --rmi all -v
-	rm -rf data logs
+	rm -rf data logs redmine_datadir pg
 
 health-base:
 	@if [ "$(call get_container_state,db)" != "running" ] ; then echo "database is down" ; false ; fi

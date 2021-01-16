@@ -51,11 +51,9 @@ services:
   check_db:
     image: schaffdev/port_check
     environment:
-      - CHECK_HOST=db
-      - CHECK_PORT=5432
+      - CHECK=db:5432
   check_redmin:
     image: schaffdev/port_check
     environment:
-      - CHECK_HOST=redmin
-      - CHECK_PORT=3000
+      - CHECK=redmin:3000
 
