@@ -27,7 +27,7 @@ get-cert:
 up: up-base ## Bring dev up
 	docker-compose up --detach nginx_dev
 
-production: check-env up-base prod-up get-cert ## Run the production environment (Includes building)
+production: check-env build prod-up get-cert ## Run the production environment (Includes building)
 
 prod-up: up-base  ## Bring production up
 	docker-compose up --detach nginx
